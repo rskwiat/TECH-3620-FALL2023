@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View, SafeAreaView, StyleSheet, Platform } from "react-native";
 import { Text, Button, SearchBar } from "@rneui/base";
 
 import AppHeader from "../components/Header";
+import { fetchRandomRecipe } from "../redux/reducers/thunks";
 
 const HomeView = ({ navigation }) => {
-	const [search, setSearch] = useState("");
+	const dispatch = useDispatch();
+	const { data, loading, errors } = useSelector((state) => state.recipes);
+	
+	useEffect(() => {
+		dispatch(fetchRandomRecipe());
+	}, []);
+	
+	const [search, setSearch] = useState("");	
 
 	return (
 		<SafeAreaView>
@@ -21,6 +30,12 @@ const HomeView = ({ navigation }) => {
 				/>
 
 				<Text style={styles.header}>Today's Recommended:</Text>
+
+				{data?.recipes?.map((recipe) => {
+					return (
+						<Text>{recipe.title}</Text>
+					);
+				})}
 				
 				<Button title="Favorites" onPress={() => navigation.navigate("Favorites")} />
 				<Button title="Recipes" onPress={() => navigation.navigate("Recipe")} />

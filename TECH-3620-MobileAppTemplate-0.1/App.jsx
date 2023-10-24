@@ -6,6 +6,9 @@ import Favorites from "./src/views/Favorites";
 import Recipe from "./src/views/Recipe";
 import Settings from "./src/views/Settings";
 
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -21,4 +24,10 @@ const App = () => {
 	);
 }
 
-export default App;
+export default () => {
+	return (
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+};
