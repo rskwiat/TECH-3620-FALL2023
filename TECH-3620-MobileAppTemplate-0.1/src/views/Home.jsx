@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, SafeAreaView, StyleSheet, Platform } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet, Platform } from "react-native";
 import { Text, Button, SearchBar } from "@rneui/base";
 
 import AppHeader from "../components/Header";
+import Card from "../components/Card";
+
 import { fetchRandomRecipe } from "../redux/reducers/thunks";
 
 const HomeView = ({ navigation }) => {
@@ -11,7 +13,9 @@ const HomeView = ({ navigation }) => {
 	const { data, loading, errors } = useSelector((state) => state.recipes);
 	
 	useEffect(() => {
-		dispatch(fetchRandomRecipe());
+		if (loading === true) {
+			dispatch(fetchRandomRecipe());
+		}
 	}, []);
 	
 	const [search, setSearch] = useState("");	
@@ -30,12 +34,16 @@ const HomeView = ({ navigation }) => {
 				/>
 
 				<Text style={styles.header}>Today's Recommended:</Text>
-
-				{data?.recipes?.map((recipe) => {
-					return (
-						<Text>{recipe.title}</Text>
-					);
-				})}
+				<ScrollView>
+					{data[0]?.recipes?.map((recipe) => {
+						return <Card 
+							title={recipe.title}
+							image={recipe.image}
+							id={recipe.id}
+							key={recipe.id} 
+							/>
+					})}
+				</ScrollView>
 				
 				<Button title="Favorites" onPress={() => navigation.navigate("Favorites")} />
 				<Button title="Recipes" onPress={() => navigation.navigate("Recipe")} />

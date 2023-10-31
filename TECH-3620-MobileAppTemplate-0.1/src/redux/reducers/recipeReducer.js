@@ -3,7 +3,7 @@ import { fetchRandomRecipe } from "./thunks";
 
 const initialState = {
   loading: true,
-  data: {},
+  data: [],
   favorites: [],
   errors: "",
 };
@@ -20,7 +20,7 @@ export const recipesSlice = createSlice({
     });
     builder.addCase(fetchRandomRecipe.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = {...action.payload};
+      state.data.push(action.payload);
     });
     builder.addCase(fetchRandomRecipe.rejected, (state, action) => {
       state.loading = false;
