@@ -44,9 +44,6 @@ const HomeView = ({ navigation }) => {
 							/>
 					})}
 				</ScrollView>
-				
-				<Button title="Favorites" onPress={() => navigation.navigate("Favorites")} />
-				<Button title="Recipes" onPress={() => navigation.navigate("Recipe")} />
 			</View>
 		</SafeAreaView>
 	);
