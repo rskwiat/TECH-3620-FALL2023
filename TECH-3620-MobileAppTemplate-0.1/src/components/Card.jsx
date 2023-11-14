@@ -19,7 +19,7 @@ const Card = ({ type, title, image, id, onButtonPress }) => {
 
 				<Button
 					icon={{
-						name: type === "favorites" ? "trash" : "heart",
+						name: type === "favorite" ? "trash" : "heart",
 						type: "ionicon",
 						size: 22,
 						color: "#fff"
