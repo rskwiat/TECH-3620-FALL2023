@@ -12,7 +12,15 @@ export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
-
+    addToFavorites: (state, action) => {
+      const id = state.favorites.map(item => item.id).includes(action.payload.id);
+      if (!id) {
+        state.favorites.push(action.payload)
+      }
+    },
+    removeFromFavorites: (state, action) => {
+      state.favorites.splice(action.payload.id, 1);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRandomRecipe.pending, (state, action) => {
@@ -29,6 +37,6 @@ export const recipesSlice = createSlice({
   }
 });
 
-export const {} = recipesSlice.actions;
+export const { addToFavorites, removeFromFavorites } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

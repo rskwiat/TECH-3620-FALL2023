@@ -7,6 +7,7 @@ import AppHeader from "../components/Header";
 import Card from "../components/Card";
 
 import { fetchRandomRecipe } from "../redux/reducers/thunks";
+import { addToFavorites } from "../redux/reducers/recipeReducer";
 
 const HomeView = ({ navigation }) => {
 	const dispatch = useDispatch();
@@ -40,8 +41,9 @@ const HomeView = ({ navigation }) => {
 							title={recipe.title}
 							image={recipe.image}
 							id={recipe.id}
-							key={recipe.id} 
-							/>
+							key={recipe.id}
+							onButtonPress={() => dispatch(addToFavorites(recipe))}
+						/>
 					})}
 				</ScrollView>
 			</View>

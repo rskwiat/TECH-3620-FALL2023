@@ -1,7 +1,7 @@
 import { Text, Button } from "@rneui/base";
 import { View, StyleSheet, ImageBackground } from "react-native";
 
-const Card = ({ title, image, id }) => {
+const Card = ({ type, title, image, id, onButtonPress }) => {
 	return (
 		<View style={styles.card}>
 			<ImageBackground
@@ -19,12 +19,13 @@ const Card = ({ title, image, id }) => {
 
 				<Button
 					icon={{
-						name: "heart",
+						name: type === "favorites" ? "trash" : "heart",
 						type: "ionicon",
 						size: 22,
 						color: "#fff"
 					}}
 					color="#e74c3c"
+					onPress={onButtonPress}
 				/>
 			</View>
 		</View>
