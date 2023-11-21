@@ -13,7 +13,7 @@ const FavoritesView = ({ navigation }) => {
 	const { favorites } = useSelector((state) => state.recipes);
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={{ flex: 1 }}>
 			<AppHeader navigation={navigation} />
 			<View>
 				{favorites.length === 0 ? <Text>No Favorites Found</Text> : <Text>Favorites:</Text>}
@@ -21,6 +21,7 @@ const FavoritesView = ({ navigation }) => {
 			<ScrollView>
 				{favorites?.map((recipe) => {
 					return <Card
+						navigation={navigation}
 						type="favorite"
 						title={recipe.title}
 						image={recipe.image}

@@ -22,7 +22,7 @@ const HomeView = ({ navigation }) => {
 	const [search, setSearch] = useState("");	
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={{ flex: 1 }}>
 			<AppHeader navigation={navigation} />
 			<View style={styles.container}>
 				<SearchBar
@@ -37,7 +37,8 @@ const HomeView = ({ navigation }) => {
 				<Text style={styles.header}>Today's Recommended:</Text>
 				<ScrollView>
 					{data[0]?.recipes?.map((recipe) => {
-						return <Card 
+						return <Card
+							navigation={navigation}
 							title={recipe.title}
 							image={recipe.image}
 							id={recipe.id}

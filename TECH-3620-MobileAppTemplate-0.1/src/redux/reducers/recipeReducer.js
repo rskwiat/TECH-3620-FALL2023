@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRandomRecipe } from "./thunks";
+import { fetchRandomRecipe, getRecipeInformation } from "./thunks";
 
 const initialState = {
   loading: true,
   data: [],
   favorites: [],
   errors: "",
+  selectedRecipe: {}
 };
 
 export const recipesSlice = createSlice({
@@ -33,6 +34,10 @@ export const recipesSlice = createSlice({
     builder.addCase(fetchRandomRecipe.rejected, (state, action) => {
       state.loading = false;
       state.errors = action.payload;
+    });
+
+    builder.addCase(getRecipeInformation.fulfilled,(state, action) => {
+      state.selectedRecipe = action.payload;
     });
   }
 });

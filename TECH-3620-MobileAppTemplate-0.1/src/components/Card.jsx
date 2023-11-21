@@ -1,7 +1,17 @@
 import { Text, Button } from "@rneui/base";
+import { useDispatch } from "react-redux";
 import { View, StyleSheet, ImageBackground } from "react-native";
 
-const Card = ({ type, title, image, id, onButtonPress }) => {
+import { getRecipeInformation } from "../redux/reducers/thunks";
+
+const Card = ({ navigation, type, title, image, id, onButtonPress }) => {
+	const dispatch = useDispatch();
+
+	const goToRecipe = (id) => {
+		dispatch(getRecipeInformation(id));
+		navigation.navigate("Recipe");
+	}
+
 	return (
 		<View style={styles.card}>
 			<ImageBackground
@@ -15,6 +25,7 @@ const Card = ({ type, title, image, id, onButtonPress }) => {
 				<Button
 					title="Go to recipe"
 					buttonStyle={{ width: "100%" }}
+					onPress={() => goToRecipe(id)}
 				/>
 
 				<Button
