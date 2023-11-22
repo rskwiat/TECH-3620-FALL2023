@@ -36,7 +36,7 @@ export const recipesSlice = createSlice({
       state.errors = action.payload;
     });
 
-    builder.addCase(getRecipeInformation.fulfilled,(state, action) => {
+    builder.addCase(getRecipeInformation.fulfilled, (state, action) => {
       state.selectedRecipe = action.payload;
     });
   }
