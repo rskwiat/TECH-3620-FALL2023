@@ -6,7 +6,7 @@ import { Text, Button, SearchBar } from "@rneui/base";
 import AppHeader from "../components/Header";
 import Card from "../components/Card";
 
-import { fetchRandomRecipe } from "../redux/reducers/thunks";
+import { fetchRandomRecipe, getSearchItem } from "../redux/reducers/thunks";
 import { addToFavorites } from "../redux/reducers/recipeReducer";
 
 const HomeView = ({ navigation }) => {
@@ -19,7 +19,8 @@ const HomeView = ({ navigation }) => {
 		}
 	}, []);
 	
-	const [search, setSearch] = useState("");	
+	const [search, setSearch] = useState("");
+	const [headerText, setHeaderText] = useState("Today's Recommended:")
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
@@ -32,9 +33,14 @@ const HomeView = ({ navigation }) => {
 					value={search}
 					containerStyle={styles.inputContainer}
 					inputContainerStyle={styles.input}
+					autoCapitalize="none"
+					onSubmitEditing={() => {
+						dispatch(getSearchItem(search));
+						setHeaderText("Search Results:");
+					}}
 				/>
 
-				<Text style={styles.header}>Today's Recommended:</Text>
+				<Text style={styles.header}>{headerText}</Text>
 				<ScrollView>
 					{data[0]?.recipes?.map((recipe) => {
 						return <Card

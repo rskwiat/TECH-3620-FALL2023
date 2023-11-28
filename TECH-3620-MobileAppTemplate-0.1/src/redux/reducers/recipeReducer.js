@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRandomRecipe, getRecipeInformation } from "./thunks";
+import { fetchRandomRecipe, getRecipeInformation, getSearchItem } from "./thunks";
 
 const initialState = {
   loading: true,
@@ -38,6 +38,19 @@ export const recipesSlice = createSlice({
 
     builder.addCase(getRecipeInformation.fulfilled, (state, action) => {
       state.selectedRecipe = action.payload;
+    });
+
+    builder.addCase(getSearchItem.pending, (state, action) => {
+      state.loading = true;
+      state.data = initialState.data;
+    });
+    builder.addCase(getSearchItem.fulfilled, (state, action) => {
+      state.loading = false;
+      const recipe = {
+        recipes: action.payload.results
+      };
+
+      state.data.push(recipe);
     });
   }
 });

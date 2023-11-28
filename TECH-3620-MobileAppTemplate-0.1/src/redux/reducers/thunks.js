@@ -14,3 +14,9 @@ export const getRecipeInformation = createAsyncThunk("fetch/recipeInformation", 
   const data = await fetch(url);
   return data.json();
 });
+
+export const getSearchItem = createAsyncThunk("fetch/searchItem", async (item) => {
+  const url = `${API_URL}/complexSearch?query=${item}&number=20&apiKey=${keys.api}`;
+  const data = await fetch(url);
+  return data.json();
+});
