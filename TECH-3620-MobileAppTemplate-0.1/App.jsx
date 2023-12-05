@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+import { useColorScheme } from "react-native";
+import { useDispatch } from "react-redux";
+import { setTheme } from "./src/redux/reducers/settingsReducer";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -42,6 +47,13 @@ const CreateHomeScreenWithTabs = () => {
 }
 
 const App = () => {
+	const mode = useColorScheme();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(setTheme(mode));
+	}, []);
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>

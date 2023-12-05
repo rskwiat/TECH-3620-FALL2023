@@ -3,17 +3,28 @@ import { Text, Switch } from "@rneui/base";
 import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../components/Header";
 import { Theme } from "../utils/constants";
+import { setTheme } from "../redux/reducers/settingsReducer";
 
 const SettingsScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
+	const { mode } = useSelector((state) => state.settings);
 
+	const changeTheme = (value) => {
+		if (value === true) {
+			dispatch(setTheme("dark"));
+		} else {
+			dispatch(setTheme("light"));
+		}
+	}
+ 
   return (
 	<SafeAreaView style={{ flex: 1 }}>
 	  <AppHeader navigation={navigation} />
 	  <View style={styles.row}>
-		<Text>Dark Mode</Text>
+		<Text>Dark Mode: {mode} </Text>
 		<Switch
-		  value={true}
-		  onValueChange={() => console.log("Change")}
+		  value={mode === "dark" ? true : false}
+		  onValueChange={(value) => changeTheme(value)}
 		/>
 	  </View>
 	  <ScrollView style={styles.container}>
