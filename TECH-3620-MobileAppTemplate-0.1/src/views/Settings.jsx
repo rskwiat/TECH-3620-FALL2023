@@ -10,31 +10,32 @@ const SettingsScreen = ({ navigation }) => {
 	const { mode } = useSelector((state) => state.settings);
 
 	const changeTheme = (value) => {
-		if (value === true) {
-			dispatch(setTheme("dark"));
-		} else {
-			dispatch(setTheme("light"));
-		}
+		const themeVal = value === true ? "dark" : "light";
+		dispatch(setTheme(themeVal));
 	}
  
   return (
-	<SafeAreaView style={{ flex: 1 }}>
+	<SafeAreaView style={{ flex: 1, backgroundColor: Theme[mode].background }}>
 	  <AppHeader navigation={navigation} />
-	  <View style={styles.row}>
-		<Text>Dark Mode: {mode} </Text>
+	  <View style={styles(mode).row}>
+		<Text style={styles(mode).text}>Dark Mode: {mode} </Text>
 		<Switch
 		  value={mode === "dark" ? true : false}
 		  onValueChange={(value) => changeTheme(value)}
 		/>
 	  </View>
-	  <ScrollView style={styles.container}>
-		<Text>Information about open source packages used.	</Text>
+	  <ScrollView style={styles(mode).container}>
+		<Text style={styles(mode).text}>Information about open source packages used.
+		</Text>
 	  </ScrollView>
 	</SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = (mode ) => StyleSheet.create({
+	text: {
+		color: Theme[mode].text
+	},
 	row: {
 		flexDirection: "row",
 		justifyContent: "space-between",

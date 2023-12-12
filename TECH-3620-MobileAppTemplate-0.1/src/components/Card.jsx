@@ -1,10 +1,12 @@
 import { Text, Button } from "@rneui/base";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { View, StyleSheet, ImageBackground } from "react-native";
 
 import { getRecipeInformation } from "../redux/reducers/thunks";
+import { Theme } from "../utils/constants";
 
 const Card = ({ navigation, type, title, image, id, onButtonPress }) => {
+	const { mode } = useSelector((state) => state.settings);
 	const dispatch = useDispatch();
 
 	const goToRecipe = (id) => {
@@ -13,15 +15,15 @@ const Card = ({ navigation, type, title, image, id, onButtonPress }) => {
 	}
 
 	return (
-		<View style={styles.card}>
+		<View style={styles(mode).card}>
 			<ImageBackground
 				source={{ uri: image }}
-				style={styles.backgroundImage}
+				style={styles(mode).backgroundImage}
 				resizeMode="cover"
 			/>
-			<Text style={styles.text}>{title}</Text>
+			<Text style={styles(mode).text}>{title}</Text>
 
-			<View style={styles.buttonWrapper}>
+			<View style={styles(mode).buttonWrapper}>
 				<Button
 					title="Go to recipe"
 					buttonStyle={{ width: "100%" }}
@@ -43,7 +45,7 @@ const Card = ({ navigation, type, title, image, id, onButtonPress }) => {
 	);
 }
 
-const styles = StyleSheet.create({
+const styles = (mode) => StyleSheet.create({
 	backgroundImage: {
 		height: 200,
 		flex: 1,
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 		fontSize: 16,
 		fontWeight: "bold",
+		color: Theme[mode].text,
 	},
 	buttonWrapper: {
 		flexDirection: "row",
@@ -65,8 +68,8 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 20,
 		borderRadius: 15,
-		backgroundColor: "#fff"
+		backgroundColor: Theme[mode].background,
 	}
-})
+});
 
 export default Card;

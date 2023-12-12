@@ -7,16 +7,18 @@ import AppHeader from "../components/Header";
 import Card from "../components/Card";
 
 import { removeFromFavorites } from "../redux/reducers/recipeReducer";
+import { Theme } from "../utils/constants";
 
 const FavoritesView = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { favorites } = useSelector((state) => state.recipes);
+	const { mode } = useSelector((state) => state.settings);
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView style={{ flex: 1, backgroundColor: Theme[mode].background }}>
 			<AppHeader navigation={navigation} />
 			<View>
-				{favorites.length === 0 ? <Text>No Favorites Found</Text> : <Text>Favorites:</Text>}
+				{favorites.length === 0 ? <Text style={styles(mode).text}>No Favorites Found</Text> : <Text style={styles(mode).text}>Favorites:</Text>}
 			</View>
 			<ScrollView>
 				{favorites?.map((recipe) => {
@@ -34,5 +36,11 @@ const FavoritesView = ({ navigation }) => {
 		</SafeAreaView>
 	);
 }
+
+const styles = (mode) => StyleSheet.create({
+	text: {
+		color: Theme[mode].text
+	}
+});
 
 export default FavoritesView;

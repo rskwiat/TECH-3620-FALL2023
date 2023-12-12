@@ -8,10 +8,12 @@ import Card from "../components/Card";
 
 import { fetchRandomRecipe, getSearchItem } from "../redux/reducers/thunks";
 import { addToFavorites } from "../redux/reducers/recipeReducer";
+import { Theme } from "../utils/constants";
 
 const HomeView = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { data, loading, errors } = useSelector((state) => state.recipes);
+	const { mode } = useSelector((state) => state.settings);
 	
 	useEffect(() => {
 		if (loading === true) {
@@ -23,16 +25,16 @@ const HomeView = ({ navigation }) => {
 	const [headerText, setHeaderText] = useState("Today's Recommended:")
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<AppHeader navigation={navigation} />
-			<View style={styles.container}>
+		<SafeAreaView style={{ flex: 1, backgroundColor: Theme[mode].background }}>
+		<AppHeader navigation={navigation} />
+			<View style={styles(mode).container}>
 				<SearchBar
 					placeholder="Please search for your reciepe..." 
-					lightTheme
+					lightTheme={mode === "dark" ? false : true }
 					onChangeText={(value) => setSearch(value)}
 					value={search}
-					containerStyle={styles.inputContainer}
-					inputContainerStyle={styles.input}
+					containerStyle={styles(mode).inputContainer}
+					inputContainerStyle={styles(mode).input}
 					autoCapitalize="none"
 					onSubmitEditing={() => {
 						dispatch(getSearchItem(search));
@@ -40,7 +42,7 @@ const HomeView = ({ navigation }) => {
 					}}
 				/>
 
-				<Text style={styles.header}>{headerText}</Text>
+				<Text style={styles(mode).header}>{headerText}</Text>
 				<ScrollView>
 					{data[0]?.recipes?.map((recipe) => {
 						return <Card
@@ -58,22 +60,25 @@ const HomeView = ({ navigation }) => {
 	);
 }
 
-const styles = StyleSheet.create({
+const styles = (mode) => StyleSheet.create({
 	container: {
 		marginHorizontal: Platform.OS === "ios" ? 18 : 20,
 	},
 	inputContainer: {
 		padding: 0,
-		marginVertical: 10,		
+		marginVertical: 10,	
+		border: 0,	
 	},
 	input: {
-		backgroundColor: "#fff",
+		border: 0,
+		backgroundColor: Theme[mode].background,
 	},
 	header: {
 		fontStyle: "italic",
 		fontSize: 15,
 		marginBottom: 10,
+		color: Theme[mode].text
 	}
-})
+});
 
 export default HomeView;

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TECH-3620-MobileAppTemplate",
-    "slug": "TECH-3620-MobileAppTemplate",
-    "version": "1.0.0",
+    "name": "broke-foodie",
+    "slug": "broke-foodie",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rskwiat.brokefoodie"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cd7c7a1a-cbf7-4304-8b7d-000e31be48f2"
+      }
     }
   }
 }

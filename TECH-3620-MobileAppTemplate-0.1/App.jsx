@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "./src/redux/reducers/settingsReducer";
+import { Theme } from "./src/utils/constants";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,8 +21,16 @@ const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 const CreateHomeScreenWithTabs = () => {
+	const { mode } = useSelector((state) => state.settings);
+	
 	return (
-		<Tabs.Navigator screenOptions={{ headerShown: false }}>
+		<Tabs.Navigator 
+			screenOptions={{ 
+				headerShown: false,
+				tabBarStyle: {
+					backgroundColor: Theme[mode].background,
+				}	
+			}}>
 			<Tabs.Screen
 				name="HomeScreen"
 				component={Home}
